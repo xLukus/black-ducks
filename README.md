@@ -2,7 +2,7 @@
 
 > **breathe** · PM2.5 near you is 3× the WHO limit. Best time to run: tomorrow 14:00.
 
-Built in 24 hours by team **Black Ducks** at **ADA Hack 2026** for the *Zrak, ki ga dihamo* challenge (Abelium × ARSO).
+Built in 24 hours by team **Black Ducks** at **ADA Hack 2026** for the *Zrak, ki ga dihamo* challenge (Abelium).
 
 ---
 
