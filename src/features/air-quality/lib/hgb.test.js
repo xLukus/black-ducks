@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { createModel } from './hgb';
 import fixture from './forecast-fixture.json';
 function loadModel(kind) {
-    const src = readFileSync(new URL(`../../../../public/data/forecast-${kind}.js`, import.meta.url), 'utf8');
+    const src = readFileSync(`${process.cwd()}/public/data/forecast-${kind}.js`, 'utf8');
     const g = {};
     new Function('window', src)(g);
     return g.LjData['forecast-' + kind];

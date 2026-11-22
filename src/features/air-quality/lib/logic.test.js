@@ -8,7 +8,7 @@ import { createHeating } from './heating';
 import { createSiting } from './siting';
 import { dist } from './geo';
 function loadSiting() {
-    const src = readFileSync(new URL('../../../../public/data/siting.js', import.meta.url), 'utf8');
+    const src = readFileSync(`${process.cwd()}/public/data/siting.js`, 'utf8');
     const g = {};
     new Function('window', src)(g);
     return g.LjData.siting;

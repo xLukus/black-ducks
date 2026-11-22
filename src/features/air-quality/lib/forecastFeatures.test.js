@@ -12,7 +12,7 @@ function frames(c) {
     return { t0: c.t0, n: c.n, pm: per(c.pm), cams: per(c.cams), met: Object.fromEntries(MET_COLS.map(k => [k, f64(c.met[k])])) };
 }
 function loadModel(kind) {
-    const src = readFileSync(new URL(`../../../../public/data/forecast-${kind}.js`, import.meta.url), 'utf8');
+    const src = readFileSync(`${process.cwd()}/public/data/forecast-${kind}.js`, 'utf8');
     const g = {};
     new Function('window', src)(g);
     return g.LjData['forecast-' + kind];
