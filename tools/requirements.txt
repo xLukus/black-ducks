@@ -1,0 +1,13 @@
+# tools/build_data.py
+numpy
+pandas
+xarray
+netCDF4
+rasterio
+pyproj
+pillow
+scipy
+
+# tools/build_siting.py (no GDAL stack needed: h5py reads the GRAL netCDF,
+# sqlite3 from the standard library reads the GeoPackage)
+h5py

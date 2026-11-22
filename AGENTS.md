@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Application architecture
+
+- Keep imported air-quality modules in `src/features/air-quality` as JavaScript/JSX; removing source-only TypeScript annotations preserves the upstream logic without weakening strict checks for project TypeScript.
+- Use TanStack file routes for `/`, `/basin`, `/sensors`, and `/heating`; shared browser-only layout and MapLibre views load dynamically after hydration to keep browser state out of SSR.
+- Preserve bundled datasets in `public/data` and pure-model tests beside the imported calculations; no account or Cloud service is needed for this upstream browser-only application.
+- Keep the upstream visual system in `src/styles.css`, with semantic color tokens, so original layout and CSS cascade remain intact.
