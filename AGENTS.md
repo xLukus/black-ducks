@@ -36,3 +36,4 @@ use the editor.
 - Preserve bundled datasets in `public/data` and pure-model tests beside the imported calculations; no account or Cloud service is needed for this upstream browser-only application.
 - Keep the upstream visual system in `src/styles.css`, with semantic color tokens, so original layout and CSS cascade remain intact.
 - Scope non-map branding to `.app--content` and render its logo conditionally; keep map styles, controls, and layer code unchanged during content-page restyling.
+- Keep ranked-list presentation limits in a pure presentation helper so truncating visible sites does not change the solver or map markers.

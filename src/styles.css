@@ -535,6 +535,17 @@ button { cursor: pointer; }
 .app--content .pick__n { background: var(--watch-mint); color: var(--watch-teal-ink); }
 .app--content .action.is-active { border-color: var(--watch-teal); background: var(--watch-soft); box-shadow: inset 0 0 0 1px var(--watch-teal); }
 .app--content .action.is-active svg { color: var(--watch-teal-ink); }
+.app--content .planning-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; text-align: left; }
+.app--content .planning-notes h3 { font-size: var(--t-base); margin-bottom: 6px; }
+.app--content .planning-notes--centered { max-width: 800px; margin-inline: auto; }
+.app--content .heating-notes { margin-top: 24px; align-items: start; }
+.app--content .heating-notes p { margin: 0; }
+.app--content .heating-formula { font-family: math, 'Cambria Math', 'STIX Two Math', serif; font-size: 16px; }
+.app--content .tool__panel--heating { display: flex; flex-direction: column; min-height: 578.5px; }
+.app--content .tool__panel--heating .heating-sliders { margin-top: auto; }
+@media (max-width: 760px) {
+  .app--content .planning-notes { grid-template-columns: 1fr; gap: 20px; }
+}
 @media (max-width: 640px) {
   .content-brand-logo { width: 122px; height: 38px; }
   .app--content .basin-chart .bars { height: 200px; gap: 4px; }

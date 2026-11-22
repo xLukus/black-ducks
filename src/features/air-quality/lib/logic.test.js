@@ -7,6 +7,7 @@ import { plan, verdict } from './planner';
 import { createHeating } from './heating';
 import { createSiting } from './siting';
 import { dist } from './geo';
+import { firstProposedSites } from './planningPresentation';
 function loadSiting() {
     const src = readFileSync(`${process.cwd()}/public/data/siting.js`, 'utf8');
     const g = {};
@@ -75,5 +76,12 @@ describe('models', () => {
         let min = Infinity;
         res.picks.forEach((a, i) => res.picks.slice(i + 1).forEach(b => { min = Math.min(min, dist(a.lon, a.lat, b.lon, b.lat)); }));
         expect(min).toBeGreaterThanOrEqual(400);
+    });
+});
+describe('sensor presentation', () => {
+    it('shows only the first five proposed sites in ranked order', () => {
+        const picks = [1, 2, 3, 4, 5, 6, 7, 8].map(k => ({ k }));
+        expect(firstProposedSites(picks).map(p => p.k)).toEqual([1, 2, 3, 4, 5]);
+        expect(picks).toHaveLength(8);
     });
 });

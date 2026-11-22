@@ -3,6 +3,7 @@ import { air } from '../lib/air';
 import { loadData } from '../lib/data';
 import { round } from '../lib/format';
 import { createSiting } from '../lib/siting';
+import { firstProposedSites } from '../lib/planningPresentation';
 import { useStore } from '../state/store';
 import { useBaseMap } from '../map/useBaseMap';
 import { addDots, addExisting, addPicks, points } from '../map/gridLayers';
@@ -97,7 +98,7 @@ export default function SensorsPage() {
         {!S && !err && <span className="spinner"/>}
         {result && result.picks.length === 0 && <p className="small">No cell passes the filters. Lower the building minimum or turn off the kindergarten filter.</p>}
         {result && result.picks.length > 0 && (<ol className="picks">
-            {result.picks.map((p, k) => {
+            {firstProposedSites(result.picks).map((p, k) => {
                 const parts = TERMS.map(t => p.parts[t.key] * w[t.key] / sum);
                 const tot = parts.reduce((a, b) => a + b, 0) || 1;
                 return (<li key={p.k} className="pick">
@@ -124,10 +125,9 @@ export default function SensorsPage() {
 
       <section className="section">
         <h2>Why more sensors</h2>
-        <div className="cols3">
+        <div className="planning-notes planning-notes--centered">
           <div><h3>Streets differ</h3><p className="small">Two schools a kilometre apart can breathe completely different air on the same evening.</p></div>
           <div><h3>Schools are good hosts</h3><p className="small">Kindergartens and schools have power, Wi-Fi and a reason to care. Low-cost sensors calibrated against ARSO are good enough.</p></div>
-          <div><h3>Proof it works</h3><p className="small">More sensors turn estimates into measurements, catch hotspots early and show whether new stoves actually help.</p></div>
         </div>
       </section>
     </main>);

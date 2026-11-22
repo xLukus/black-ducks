@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Layers, RotateCcw } from 'lucide-react';
 import { useStore } from '../state/store';
 import { NAMES } from '../lib/config';
-import { Segmented, SrcTag } from '../components/ui';
+import { Segmented } from '../components/ui';
 const ROWS = [
     { key: 'stations', name: 'Stations and sensors', desc: 'Big discs are ARSO reference stations, small ones calibrated sensors.', src: 'meas' },
     { key: 'pool', name: 'Smog layer', desc: 'How high the polluted air reaches over the basin this hour.', src: 'model' },
@@ -38,7 +38,6 @@ export function LayersPanel({ loading, onReset, is3D, on3D }) {
               <span className="layers__text">
                 <span className="layers__name">
                   {r.name}
-                  {r.src && <SrcTag src={r.src}/>}
                   {loading[r.key] && <span className="spinner"/>}
                 </span>
                 <span className="xs">{r.desc}</span>
