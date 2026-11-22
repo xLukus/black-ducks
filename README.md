@@ -50,7 +50,7 @@ Every number in the app is labelled as **measured**, **sensor**, **estimate**, *
 
 ---
 
-##How the Forecasting works
+How the Forecasting works
 ---
 If interested about the backbone of our forecast check out forecast.md
 ## Run it
