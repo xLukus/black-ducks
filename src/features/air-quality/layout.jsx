@@ -6,8 +6,8 @@ export default function AirLayout({ children }) {
   useAirBoot();
   const isMap = useLocation().pathname === '/';
   return (
-    <div className={isMap ? 'app app--map' : 'app'}>
-      <TopBar />
+    <div className={isMap ? 'app app--map' : 'app app--content'}>
+      <TopBar contentBrand={!isMap} />
       <AlertBanner />
       {children}
       {!isMap && <Footer />}

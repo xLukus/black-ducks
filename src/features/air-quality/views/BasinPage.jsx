@@ -123,8 +123,7 @@ export default function BasinPage() {
             </div>
           </section>
 
-          <section className="section two">
-            <div>
+          <section className="section basin-chart">
               <h2>By month</h2>
               <p className="lede">Share of hours with an inversion.</p>
               <div className="bars">
@@ -134,24 +133,16 @@ export default function BasinPage() {
                     <span className="bars__l">{m.m.slice(0, 1)}</span>
                   </div>))}
               </div>
-            </div>
-            <div>
+          </section>
+          <section className="section basin-chart">
               <h2>By hour of a winter day</h2>
               <p className="lede">Most common at {stats.peakHours} in the morning, rarest at {stats.quietHours}. That is why the planner usually picks the early afternoon.</p>
               <div className="bars bars--dense">
                 {stats.hourly.map((v, h) => (<div key={h} className="bars__col" title={`${hhmm(h)}: ${v} % of winter hours`}>
-                    <span className="bars__bar" style={{ height: (v / hmax) * 100 + '%', background: h >= 12 && h <= 17 ? '#50ccaa' : undefined }}/>
+                    <span className={'bars__bar' + (h >= 12 && h <= 17 ? ' bars__bar--clean' : '')} style={{ height: (v / hmax) * 100 + '%' }}/>
                     <span className="bars__l">{h % 6 === 0 ? String(h).padStart(2, '0') : ''}</span>
                   </div>))}
               </div>
-            </div>
-          </section>
-
-          <section className="section">
-            <h2>The smoke changed. The bowl did not.</h2>
-            <ol className="history">
-              {stats.history.map(h => (<li key={h.when}><span className="history__when">{h.when}</span><p className="small">{h.text}</p></li>))}
-            </ol>
           </section>
         </>)}
 

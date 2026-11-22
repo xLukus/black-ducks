@@ -496,3 +496,46 @@ button { cursor: pointer; }
 
 .site-card { display: grid; gap: 2px; margin-top: 12px; padding: 10px 12px; background: var(--surface-2); border-radius: 8px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+
+/* Black Duck Watch accents are isolated from every map and its controls. */
+.app--content {
+  --watch-teal: oklch(0.704 0.14 182.5);
+  --watch-teal-ink: oklch(0.43 0.082 183);
+  --watch-sky: oklch(0.828 0.111 230);
+  --watch-mint: oklch(0.91 0.032 153);
+  --watch-line: oklch(0.9 0.012 175);
+  --watch-soft: oklch(0.95 0.009 160);
+  --watch-shadow: 0 5px 24px oklch(0.208 0.015 211 / 0.045);
+}
+.app--content .topbar { border-bottom-color: var(--watch-line); }
+.content-brand-logo { display: block; width: 148px; height: 44px; object-fit: contain; }
+.app--content .nav__link.is-active { color: var(--watch-teal-ink); background: var(--watch-mint); }
+.app--content .nav__link:hover { color: var(--watch-teal-ink); background: var(--watch-soft); }
+.app--content .page-head .eyebrow { color: var(--watch-teal-ink); }
+.app--content .page-head h1 { color: var(--ink); font-weight: 700; }
+.app--content .section > h2 { color: var(--watch-teal-ink); }
+.app--content .stats { border-color: var(--watch-line); background: var(--watch-line); box-shadow: var(--watch-shadow); }
+.app--content .stats strong { color: var(--watch-teal-ink); }
+.app--content .steps li { border-top-color: var(--watch-teal); }
+.app--content .steps li::before { color: var(--watch-teal-ink); }
+.app--content .basin-chart .bars { height: 240px; gap: 8px; }
+.app--content .basin-chart .bars__bar { background: var(--watch-teal); }
+.app--content .basin-chart .bars--dense .bars__bar { background: var(--watch-sky); }
+.app--content .basin-chart .bars--dense .bars__bar--clean { background: var(--watch-teal); }
+.app--content .linkcard { border-color: var(--watch-line); box-shadow: var(--watch-shadow); }
+.app--content .linkcard strong { color: var(--watch-teal-ink); }
+.app--content .linkcard:hover { border-color: var(--watch-teal); }
+.app--content .tool__panel { border-color: var(--watch-line); box-shadow: var(--watch-shadow); }
+.app--content .tool__panel .range { accent-color: var(--watch-teal-ink); }
+.app--content .tool__panel .input:focus { border-color: var(--watch-teal); box-shadow: 0 0 0 3px var(--watch-mint); }
+.app--content .tool__panel .seg button[aria-pressed='true'] { background: var(--watch-mint); color: var(--watch-teal-ink); }
+.app--content .tool__panel .switch input:checked { background: var(--watch-teal-ink); }
+.app--content .site-card { background: var(--watch-soft); }
+.app--content .pick { border-color: var(--watch-line); box-shadow: var(--watch-shadow); }
+.app--content .pick__n { background: var(--watch-mint); color: var(--watch-teal-ink); }
+.app--content .action.is-active { border-color: var(--watch-teal); background: var(--watch-soft); box-shadow: inset 0 0 0 1px var(--watch-teal); }
+.app--content .action.is-active svg { color: var(--watch-teal-ink); }
+@media (max-width: 640px) {
+  .content-brand-logo { width: 122px; height: 38px; }
+  .app--content .basin-chart .bars { height: 200px; gap: 4px; }
+}
