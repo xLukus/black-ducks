@@ -20,7 +20,7 @@ export default function SensorsPage() {
     const [err, setErr] = useState('');
     const [n, setN] = useState(8);
     const [w, setW] = useState({ exposure: 40, conc: 25, gap: 20, unc: 15 });
-    const [minB, setMinB] = useState(5);
+    const [minB] = useState(5);
     const [hostsOnly, setHostsOnly] = useState(false);
     const [view, setView] = useState('score');
     useEffect(() => {
@@ -70,15 +70,14 @@ export default function SensorsPage() {
             <span><i className="lg-sensor"/>Sensor</span>
           </div>
         </div>
-        <aside className="tool__panel card">
+        <aside className="tool__panel tool__panel--sensors card">
           <Slider label="New sensors" value={n} min={1} max={20} step={1} fmt={v => String(v)} onChange={setN}/>
           <div className="tool__group">
             <span className="label">What the ranking rewards</span>
             {TERMS.map(t => (<Slider key={t.key} label={t.label} value={w[t.key]} min={0} max={100} step={5} fmt={v => Math.round((v / sum) * 100) + ' %'} onChange={v => setW(o => ({ ...o, [t.key]: v }))}/>))}
           </div>
           <div className="tool__group">
-            <Slider label="Skip cells with fewer than" value={minB} min={0} max={40} step={1} fmt={v => v + ' buildings'} onChange={setMinB}/>
-            <label className="switch" style={{ marginTop: 14 }}>
+            <label className="switch">
               <input type="checkbox" checked={hostsOnly} onChange={e => setHostsOnly(e.target.checked)}/>
               Only where a kindergarten or school can host it
             </label>
@@ -96,7 +95,7 @@ export default function SensorsPage() {
         <div className="legend legend--terms">{TERMS.map(t => <span key={t.key}><i style={{ background: t.color }}/>{t.label} — {t.desc}</span>)}</div>
         {err && <p className="small">{err}</p>}
         {!S && !err && <span className="spinner"/>}
-        {result && result.picks.length === 0 && <p className="small">No cell passes the filters. Lower the building minimum or turn off the kindergarten filter.</p>}
+        {result && result.picks.length === 0 && <p className="small">No cell passes the filters. Turn off the kindergarten filter.</p>}
         {result && result.picks.length > 0 && (<ol className="picks">
             {firstProposedSites(result.picks).map((p, k) => {
                 const parts = TERMS.map(t => p.parts[t.key] * w[t.key] / sum);
@@ -125,9 +124,10 @@ export default function SensorsPage() {
 
       <section className="section">
         <h2>Why more sensors</h2>
-        <div className="planning-notes planning-notes--centered">
+        <div className="planning-notes planning-notes--three">
           <div><h3>Streets differ</h3><p className="small">Two schools a kilometre apart can breathe completely different air on the same evening.</p></div>
           <div><h3>Schools are good hosts</h3><p className="small">Kindergartens and schools have power, Wi-Fi and a reason to care. Low-cost sensors calibrated against ARSO are good enough.</p></div>
+          <div><h3>Catch local peaks</h3><p className="small">More neighbourhood measurements can reveal short pollution spikes that distant stations miss, helping the city target the places that need cleaner air most.</p></div>
         </div>
       </section>
     </main>);
