@@ -313,6 +313,18 @@ button { cursor: pointer; }
 .sb-foot { display: grid; gap: 12px; justify-items: start; }
 .sb-details-toggle { justify-content: space-between; height: auto; white-space: normal; }
 .sb-details-toggle + p { margin-top: 8px; }
+.health-impact { width: min(560px, calc(100% - 32px)); max-width: 560px; max-height: calc(100dvh - 32px); overflow-y: auto; background: var(--surface); color: var(--ink); border-radius: 8px; letter-spacing: 0; }
+.health-impact h2 { letter-spacing: 0; padding-right: 20px; }
+.health-groups { display: flex; flex-wrap: wrap; gap: 8px; }
+.health-groups button { white-space: normal; height: auto; min-height: 32px; }
+.health-groups button[aria-pressed='true'] { background: var(--accent-weak); border-color: var(--accent); color: var(--accent); }
+.health-reading { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.health-reading strong { font-size: 30px; }
+.health-reading > div { margin-right: auto; }
+.health-section { display: grid; gap: 8px; }
+.health-section h3 { display: flex; gap: 8px; align-items: center; font-size: var(--t-base); font-weight: 600; }
+.health-section h3 svg { width: 18px; height: 18px; color: var(--accent); }
+.health-recommendation { border-top: 1px solid var(--line); padding-top: 14px; }
 
 .verdict { margin-top: 14px; }
 .verdict__title { font-size: var(--t-lg); margin-bottom: 4px; }

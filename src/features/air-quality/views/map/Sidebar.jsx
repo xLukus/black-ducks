@@ -14,9 +14,15 @@ import { useStore } from '../../state/store';
 import { BandChip, Segmented, SrcTag } from '../../components/ui';
 import { HourBars, Sparkline } from '../../components/Charts';
 import { PlaceSearch } from '../../components/PlaceSearch';
+import { HealthImpact } from '../../components/HealthImpact';
 export function Sidebar({ elevation }) {
     const { ready, idx, pollutant: p, profile, selection, setSelection, setIdx, setPlaying, setProfile } = useStore();
     useStore(s => s.version);
+    const [healthOpen, setHealthOpen] = useState(false);
+    const chooseProfile = (next) => {
+        setProfile(next);
+        setHealthOpen(next !== 'everyone');
+    };
     if (!ready) {
         return <aside className="sidebar"><div className="sb-section"><span className="spinner"/> <span className="small">Loading the latest measurements…</span></div></aside>;
     }
@@ -60,12 +66,12 @@ export function Sidebar({ elevation }) {
       {/* ---------- for whom ---------- */}
       <section className="sb-section">
         <span className="label">Advice for</span>
-        <Segmented block label="Who is going out" value={profile} onChange={setProfile} options={PROFILE_KEYS.map(k => ({ value: k, label: PROFILES[k].label }))}/>
+        <Segmented block label="Who is going out" value={profile} onChange={chooseProfile} options={PROFILE_KEYS.map(k => ({ value: k, label: k === 'sensitive' ? 'Asthma' : PROFILES[k].label }))}/>
         {v && (<div className="verdict">
             <h2 className="verdict__title">{v.title}</h2>
-            <p className="small">{v.advice}</p>
           </div>)}
-        <WhyItMatters key={profile} profile={profile}/>
+        {profile !== 'everyone' && <Button variant="ghost" className="why__head" onClick={() => setHealthOpen(true)}>Why it matters for {profile === 'sensitive' ? 'people with asthma' : PROFILES[profile].long.toLowerCase()} <ChevronDown/></Button>}
+        <HealthImpact open={healthOpen} onOpenChange={setHealthOpen} profile={profile} onProfileChange={setProfile} reading={readingFor(selection, idx, 'pm25')} place={nameOf(selection)} when={fmtWhen(timeAt(idx))}/>
       </section>
 
       {/* ---------- today ---------- */}
