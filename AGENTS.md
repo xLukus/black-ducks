@@ -38,3 +38,4 @@ use the editor.
 - Scope non-map branding to `.app--content` and render its logo conditionally; keep map styles, controls, and layer code unchanged during content-page restyling.
 - Keep ranked-list presentation limits in a pure presentation helper so truncating visible sites does not change the solver or map markers.
 - Derive health guidance through a pure PM2.5 category helper and pass the selected place/hour reading into the dialog; never substitute PM10 or fabricated values.
+- Keep forecast date/time options in a pure Ljubljana-time helper and navigate through the shared hour index only when a real reading exists, so forecast controls stay synchronized with the map and timeline.

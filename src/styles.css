@@ -358,6 +358,12 @@ button { cursor: pointer; }
 .next__cell { display: grid; justify-items: center; gap: 4px; padding: 8px 2px; border: 1px solid var(--line); border-radius: 8px; }
 .next__sw { width: 100%; max-width: 28px; height: 6px; border-radius: 3px; }
 .next__range { font-size: 10.5px; color: var(--ink-3); }
+.next__cell { height: auto; min-width: 0; white-space: normal; background: var(--surface); color: var(--ink); }
+.next__cell:hover, .next__cell[aria-pressed='true'] { border-color: var(--accent); background: var(--accent-weak); }
+.forecast-picker { display: grid; gap: 12px; }
+.forecast-picker__fields { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 10px; }
+.forecast-picker__fields label { min-width: 0; display: grid; gap: 5px; }
+.forecast-picker .input { min-width: 0; padding-inline: 8px; }
 .days { width: 100%; border-collapse: collapse; margin: 10px 0 8px; font-size: var(--t-sm); }
 .days th, .days td { padding: 7px 4px; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; white-space: nowrap; }
 .days thead th { font-size: var(--t-xs); color: var(--ink-3); font-weight: 500; }
@@ -553,8 +559,22 @@ button { cursor: pointer; }
 .app--content .planning-notes h3 { font-size: var(--t-base); margin-bottom: 6px; }
 .app--content .planning-notes--centered { max-width: 800px; margin-inline: auto; }
 .app--content .planning-notes--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.app--content .tool__panel--sensors { min-height: 560px; display: flex; flex-direction: column; }
-.app--content .tool__panel--sensors .tool__group { margin-top: auto; }
+.app--content .tool__panel--sensors { min-height: 560px; display: flex; flex-direction: column; gap: 14px; }
+.app--content .tool__panel--sensors .tool__group { margin-top: 0; padding-top: 12px; }
+.field__help { display: block; font-size: var(--t-xs); line-height: 1.4; color: var(--ink-3); margin-top: 3px; }
+.tool__panel--sensors .field + .field { margin-top: 10px; }
+.sensor-map-colours { display: grid; gap: 8px; }
+.sensor-map-colours .seg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 4px; }
+.sensor-map-colours .seg button { width: 100%; text-align: center; min-height: 34px; }
+.app--content .tool--sensors { align-items: stretch; }
+.app--content .tool--sensors .tool__map { height: auto; min-height: 560px; }
+.heating-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.heating-stats > div { min-width: 0; gap: 10px; }
+.heating-stats .heating-stat-label { font-weight: 600; color: var(--ink); }
+.heating-stats strong { font-size: 28px; overflow-wrap: anywhere; }
+.heating-stats strong small { font-size: var(--t-sm); font-weight: 500; }
+@media (max-width: 900px) { .heating-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .heating-stats { grid-template-columns: 1fr; } }
 @media (max-width: 900px) {
   .app--content .tool--sensors .tool__map { height: 560px; }
 }
