@@ -19,10 +19,11 @@ export function SrcTag({ src }) {
 export function BandChip({ band }) {
     return <span className="band" style={{ background: BAND_COLORS[band], color: BAND_INK[band] }}>{BAND_LABELS[band]}</span>;
 }
-export function Slider({ label, value, min, max, step, fmt, onChange }) {
+export function Slider({ label, value, min, max, step, fmt, onChange, help }) {
     return (<label className="field" style={{ display: 'block' }}>
       <span className="field__head"><span>{label}</span><strong className="num">{fmt(value)}</strong></span>
       <input className="range" type="range" min={min} max={max} step={step} value={value} onChange={e => onChange(+e.target.value)}/>
+      {help && <span className="field__help">{help}</span>}
     </label>);
 }
 export function NoMap({ children }) {

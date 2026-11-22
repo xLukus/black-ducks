@@ -71,10 +71,11 @@ export default function SensorsPage() {
           </div>
         </div>
         <aside className="tool__panel tool__panel--sensors card">
-          <Slider label="New sensors" value={n} min={1} max={20} step={1} fmt={v => String(v)} onChange={setN}/>
+          <Slider label="New sensors" value={n} min={1} max={20} step={1} fmt={v => String(v)} onChange={setN} help="How many sensors to place on the map; the list shows the first five."/>
           <div className="tool__group">
             <span className="label">What the ranking rewards</span>
-            {TERMS.map(t => (<Slider key={t.key} label={t.label} value={w[t.key]} min={0} max={100} step={5} fmt={v => Math.round((v / sum) * 100) + ' %'} onChange={v => setW(o => ({ ...o, [t.key]: v }))}/>))}
+            <p className="field__help">Increase a weight to give that priority more influence. Percentages adjust together.</p>
+            {TERMS.map(t => (<Slider key={t.key} label={t.label} help={t.desc} value={w[t.key]} min={0} max={100} step={5} fmt={v => Math.round((v / sum) * 100) + ' %'} onChange={v => setW(o => ({ ...o, [t.key]: v }))}/>))}
           </div>
           <div className="tool__group">
             <label className="switch">
@@ -82,7 +83,7 @@ export default function SensorsPage() {
               Only where a kindergarten or school can host it
             </label>
           </div>
-          <div className="tool__group">
+          <div className="tool__group sensor-map-colours">
             <span className="label">Colour the map by</span>
             <Segmented value={view} onChange={setView} options={[{ value: 'score', label: 'Score' }, { value: 'exposure', label: 'Exposure' }, { value: 'conc', label: 'Pollution' }, { value: 'unc', label: 'Uncertainty' }]}/>
           </div>

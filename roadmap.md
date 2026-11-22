@@ -27,3 +27,9 @@
 - [x] Remove the footer guidance and data paragraphs.
 - [x] Remove the burn-ban option and rename site suggestions.
 - [x] Apply the selected €1,000 stove replacement rate to totals and verify calculations.
+
+# Forecast and planning clarity
+
+- [ ] Make forecast hours clickable and add date/time selection for available forecasts.
+- [ ] Clarify sensor sliders and align the map-colour selector.
+- [ ] Improve heating figures without changing the €1,000 rate or model, then check the flows.
