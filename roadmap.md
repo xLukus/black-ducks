@@ -24,6 +24,6 @@
 
 # Footer and heating simplification
 
-- [ ] Remove the footer guidance and data paragraphs.
-- [ ] Remove the burn-ban option and rename site suggestions.
-- [ ] Apply the selected €1,000 stove replacement rate to totals and verify calculations.
+- [x] Remove the footer guidance and data paragraphs.
+- [x] Remove the burn-ban option and rename site suggestions.
+- [x] Apply the selected €1,000 stove replacement rate to totals and verify calculations.
