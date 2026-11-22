@@ -30,6 +30,6 @@
 
 # Forecast and planning clarity
 
-- [ ] Make forecast hours clickable and add date/time selection for available forecasts.
-- [ ] Clarify sensor sliders and align the map-colour selector.
-- [ ] Improve heating figures without changing the €1,000 rate or model, then check the flows.
+- [x] Make forecast hours clickable and add date/time selection for available forecasts.
+- [x] Clarify sensor sliders and align the map-colour selector.
+- [x] Improve heating figures without changing the €1,000 rate or model, then check the flows.
