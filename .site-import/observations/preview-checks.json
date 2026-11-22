@@ -1,0 +1,118 @@
+[
+  {
+    "route": "/",
+    "viewport": "desktop",
+    "controls": "layers, heating-smoke checkbox, 2D/3D, reset, place search, profile, advice accordion, alerts profile and notification next step, play/pause/now",
+    "result": "passed",
+    "errors": [],
+    "requestsFailed": [],
+    "screenshots": [
+      "desktop-map-settled.png",
+      "desktop-search.png",
+      "desktop-alerts.png"
+    ]
+  },
+  {
+    "route": "/basin",
+    "viewport": "desktop",
+    "sections": [
+      "How an inversion forms",
+      "How often, and how much worse",
+      "By month",
+      "By hour of a winter day",
+      "The smoke changed. The bowl did not.",
+      "What the city can do"
+    ],
+    "result": "passed",
+    "errors": [],
+    "screenshots": [
+      "desktop-basin-top.png",
+      "desktop-basin-bottom.png"
+    ]
+  },
+  {
+    "route": "/sensors",
+    "viewport": "desktop",
+    "sections": [
+      "Proposed sites, in order",
+      "Why more sensors"
+    ],
+    "result": "passed",
+    "errors": [],
+    "screenshots": [
+      "desktop-sensors-top.png",
+      "desktop-sensors-bottom.png"
+    ]
+  },
+  {
+    "route": "/heating",
+    "viewport": "desktop",
+    "sections": [
+      "What it buys"
+    ],
+    "result": "passed",
+    "errors": [],
+    "screenshots": [
+      "desktop-heating-top.png",
+      "desktop-heating-bottom.png"
+    ]
+  },
+  {
+    "route": "/",
+    "viewport": "phone",
+    "controls": "layers, heating-smoke checkbox, 2D/3D, reset, place search, profile, advice accordion, alerts profile and notification next step, play/pause/now",
+    "result": "passed",
+    "errors": [],
+    "requestsFailed": [],
+    "screenshots": [
+      "phone-map-settled.png",
+      "phone-search.png",
+      "phone-alerts.png"
+    ]
+  },
+  {
+    "route": "/basin",
+    "viewport": "phone",
+    "sections": [
+      "How an inversion forms",
+      "How often, and how much worse",
+      "By month",
+      "By hour of a winter day",
+      "The smoke changed. The bowl did not.",
+      "What the city can do"
+    ],
+    "result": "passed",
+    "errors": [],
+    "screenshots": [
+      "phone-basin-top.png",
+      "phone-basin-bottom.png"
+    ]
+  },
+  {
+    "route": "/sensors",
+    "viewport": "phone",
+    "sections": [
+      "Proposed sites, in order",
+      "Why more sensors"
+    ],
+    "result": "passed",
+    "errors": [],
+    "screenshots": [
+      "phone-sensors-top.png",
+      "phone-sensors-bottom.png"
+    ]
+  },
+  {
+    "route": "/heating",
+    "viewport": "phone",
+    "sections": [
+      "What it buys"
+    ],
+    "result": "passed",
+    "errors": [],
+    "screenshots": [
+      "phone-heating-top.png",
+      "phone-heating-bottom.png"
+    ]
+  }
+]
