@@ -3,7 +3,7 @@ import { Flame, Ban, Factory } from 'lucide-react';
 import { loadData } from '../lib/data';
 import { eur } from '../lib/format';
 import { circle } from '../lib/geo';
-import { createHeating, EVENING_HOURS, PEOPLE, SEASON_DAYS } from '../lib/heating';
+import { createHeating, EVENING_HOURS, SEASON_DAYS } from '../lib/heating';
 import { useBaseMap } from '../map/useBaseMap';
 import { addDots, points } from '../map/gridLayers';
 import { NoMap, Slider } from '../components/ui';
@@ -20,7 +20,6 @@ export default function HeatingPage() {
     const [radius, setRadius] = useState(300);
     const [action, setAction] = useState('stoves');
     const [share, setShare] = useState(50);
-    const [people, setPeople] = useState(null);
     const [q, setQ] = useState('');
     useEffect(() => {
         loadData('siting').then(d => {
@@ -29,14 +28,14 @@ export default function HeatingPage() {
             setSite(h.sites.find(s => s.cat === 'kindergarten') || h.sites[0]);
         }).catch(e => console.error(e));
     }, []);
-    const res = useMemo(() => H && site ? H.run({ site, radius, action, share: share / 100, people }) : null, [H, site, radius, action, share, people]);
+    const res = useMemo(() => H && site ? H.run({ site, radius, action, share: share / 100 }) : null, [H, site, radius, action, share]);
     const options = useMemo(() => {
         if (!H)
             return [];
         const n = q.trim().toLowerCase();
         return n ? H.sites.filter(s => label(s).toLowerCase().includes(n)).slice(0, 8) : [];
     }, [H, q]);
-    function pick(s) { setSite(s); setPeople(null); setQ(''); }
+    function pick(s) { setSite(s); setQ(''); }
     // ---- map
     const el = useRef(null);
     const { base, ready, failed } = useBaseMap(el, { buildings: false, pitch: 0, bearing: 0, zoom: 13.6, scrollZoom: false });
@@ -89,7 +88,7 @@ export default function HeatingPage() {
             <span><i className="lg-removed"/>Smoke removed</span>
           </div>
         </div>
-        <aside className="tool__panel card">
+        <aside className="tool__panel tool__panel--heating card">
           <span className="label">Site</span>
           <div className="search">
             <input className="input" type="search" placeholder="Search a kindergarten, school or care home" value={q} onChange={e => setQ(e.target.value)} aria-label="Search a site"/>
@@ -107,15 +106,10 @@ export default function HeatingPage() {
                 Smokiest {c === 'elderly home' ? 'care home' : c}
               </button>))}
           </div>
-          <div className="tool__group">
+          <div className="tool__group heating-sliders">
             {/* 250 m is the grid: a smaller radius can miss every cell centre */}
             <Slider label="Radius around the site" value={radius} min={250} max={1000} step={50} fmt={v => v + ' m'} onChange={setRadius}/>
             <Slider label={SHARE_LABEL[action]} value={share} min={0} max={100} step={5} fmt={v => v + ' %'} onChange={setShare}/>
-          </div>
-          <div className="tool__group">
-            <label className="label" htmlFor="people">People at this site</label>
-            <input id="people" className="input" type="number" min={0} step={10} value={people ?? ''} placeholder={String(site ? PEOPLE[site.cat] || 100 : 100)} onChange={e => setPeople(e.target.value === '' ? null : +e.target.value)}/>
-            <p className="xs" style={{ marginTop: 6 }}>Only used for the exposure figure. The default is a rough class size, not data.</p>
           </div>
         </aside>
       </div>
@@ -129,15 +123,20 @@ export default function HeatingPage() {
               <div><strong className="num">{action === 'ban' ? '–' : res.targets.toLocaleString('en-GB')}</strong><span>{action === 'stoves' ? 'buildings to convert' : action === 'heat' ? 'buildings to connect' : 'a ban needs no building work'}</span></div>
               <div><strong className="num">{action === 'ban' ? '0 €' : eur(res.cost)}</strong><span>{action === 'ban' ? 'enforcement, not investment' : `at ${action === 'stoves' ? '6,000' : '8,000'} € per building, before subsidies`}</span></div>
             </div>
-            <p className="small" style={{ marginTop: 20, maxWidth: 720 }}>
+            <div className="planning-notes heating-notes">
+            <p className="small">
               That is about <strong>{Math.round(res.personHours).toLocaleString('en-GB')}</strong> µg/m³ · {kids ? 'child' : 'person'}-hours less exposure per heating season,
               for {res.people} {kids ? 'children' : 'people'} over {EVENING_HOURS} evening hours on {SEASON_DAYS} days.
               It removes {(res.f * 100).toFixed(1)} % of the heating smoke reaching the site, from {res.cellsIn} grid cells inside the radius.
             </p>
-            <p className="xs" style={{ marginTop: 12, maxWidth: 720 }}>
-              How it works: every 250 m cell’s heating emissions (ARSO inventory) are weighted by distance, w = 1 / (1 + (d / 150 m)²).
+            <p className="small">
+              How it works: every 250 m cell’s heating emissions (ARSO inventory) are weighted by distance,{' '}
+              <math className="heating-formula" aria-label="w equals one divided by one plus the square of d divided by 150 metres">
+                <mi>w</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mrow><mo>(</mo><mfrac><mi>d</mi><mrow><mn>150</mn><mspace width="0.2em"/><mi mathvariant="normal">m</mi></mrow></mfrac><mo>)</mo></mrow><mn>2</mn></msup></mrow></mfrac>
+              </math>.
               The share removed inside the radius is compared with everything within 1.5 km, and applied to the GRAL model’s evening value at the site.
             </p>
+            </div>
           </>)}
       </section>
     </main>);

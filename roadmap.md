@@ -9,3 +9,9 @@
 - [x] Apply Black Duck Watch’s existing logo and teal, sky-blue, and mint accents to the three non-map pages while preserving their layouts and all maps.
 - [x] Remove the basin history section and put the monthly and hourly charts in separate full-width rows.
 - [x] Verify the three restyled pages and confirm the main map remains unchanged.
+
+# Planning-page adjustments
+
+- [ ] Show only the first five proposed sites and center the two remaining left-aligned sensor explanations.
+- [ ] Put heating explanations in two columns with a typeset formula; remove the people field and lower the sliders without shortening the panel.
+- [ ] Remove Measured/Model badges only from the map Layers panel, and verify the changed pages.
