@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Bell, Footprints, Wind, CircleAlert, X, ChevronDown } from 'lucide-react';
 import { air, cap, coordsOf, dayHours, estimateAt, nameOf, readingFor, stationById, timeAt, valueAt } from '../../lib/air';
-import { BAND_COLORS, BAND_TEXT, GROUP_TEXT, NAMES, PROFILES, PROFILE_KEYS, UNIT } from '../../lib/config';
+import { BAND_COLORS, BAND_TEXT, NAMES, PROFILES, PROFILE_KEYS, UNIT } from '../../lib/config';
 import { bandIndex } from '../../lib/aqi';
 import { fmtDay, fmtHour, fmtWhen, hhmm, isNum, km, round } from '../../lib/format';
 import { plan as makePlan, verdict } from '../../lib/planner';
@@ -14,9 +14,15 @@ import { useStore } from '../../state/store';
 import { BandChip, Segmented, SrcTag } from '../../components/ui';
 import { HourBars, Sparkline } from '../../components/Charts';
 import { PlaceSearch } from '../../components/PlaceSearch';
+import { HealthImpact } from '../../components/HealthImpact';
 export function Sidebar({ elevation }) {
     const { ready, idx, pollutant: p, profile, selection, setSelection, setIdx, setPlaying, setProfile } = useStore();
     useStore(s => s.version);
+    const [healthOpen, setHealthOpen] = useState(false);
+    const chooseProfile = (next) => {
+        setProfile(next);
+        setHealthOpen(next !== 'everyone');
+    };
     if (!ready) {
         return <aside className="sidebar"><div className="sb-section"><span className="spinner"/> <span className="small">Loading the latest measurements…</span></div></aside>;
     }
@@ -60,12 +66,12 @@ export function Sidebar({ elevation }) {
       {/* ---------- for whom ---------- */}
       <section className="sb-section">
         <span className="label">Advice for</span>
-        <Segmented block label="Who is going out" value={profile} onChange={setProfile} options={PROFILE_KEYS.map(k => ({ value: k, label: PROFILES[k].label }))}/>
+        <Segmented block label="Who is going out" value={profile} onChange={chooseProfile} options={PROFILE_KEYS.map(k => ({ value: k, label: k === 'sensitive' ? 'Asthma' : PROFILES[k].label }))}/>
         {v && (<div className="verdict">
             <h2 className="verdict__title">{v.title}</h2>
-            <p className="small">{v.advice}</p>
           </div>)}
-        <WhyItMatters key={profile} profile={profile}/>
+        {profile !== 'everyone' && <Button variant="ghost" className="why__head" onClick={() => setHealthOpen(true)}>Why it matters for {profile === 'sensitive' ? 'people with asthma' : PROFILES[profile].long.toLowerCase()} <ChevronDown/></Button>}
+        <HealthImpact open={healthOpen} onOpenChange={setHealthOpen} profile={profile} onProfileChange={setProfile} reading={readingFor(selection, idx, 'pm25')} place={nameOf(selection)} when={fmtWhen(timeAt(idx))}/>
       </section>
 
       {/* ---------- today ---------- */}
@@ -128,16 +134,6 @@ function placeSub(sel) {
     if (sel.kind === 'place')
         return cap(air.places?.rows[sel.id]?.[2] || 'place');
     return `${sel.lat.toFixed(4)}° N, ${sel.lng.toFixed(4)}° E`;
-}
-function WhyItMatters({ profile }) {
-    const [open, setOpen] = useState(false);
-    return (<div className={'why' + (open ? ' is-open' : '')}>
-      <button className="why__head" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        Why it matters for {PROFILES[profile].long.toLowerCase()}
-        <ChevronDown />
-      </button>
-      {open && GROUP_TEXT[profile].map((t, k) => <p key={k} className="small">{t}</p>)}
-    </div>);
 }
 function NextHours({ selection, p }) {
     const version = useStore(s => s.version);

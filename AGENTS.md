@@ -37,3 +37,4 @@ use the editor.
 - Keep the upstream visual system in `src/styles.css`, with semantic color tokens, so original layout and CSS cascade remain intact.
 - Scope non-map branding to `.app--content` and render its logo conditionally; keep map styles, controls, and layer code unchanged during content-page restyling.
 - Keep ranked-list presentation limits in a pure presentation helper so truncating visible sites does not change the solver or map markers.
+- Derive health guidance through a pure PM2.5 category helper and pass the selected place/hour reading into the dialog; never substitute PM10 or fabricated values.

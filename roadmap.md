@@ -15,3 +15,9 @@
 - [x] Show only the first five proposed sites and center the two remaining left-aligned sensor explanations.
 - [x] Put heating explanations in two columns with a typeset formula; remove the people field and lower the sliders without shortening the panel.
 - [x] Remove Measured/Model badges only from the map Layers panel, and verify the changed pages.
+
+# Map health guidance
+
+- [x] Use the new logo on the map and remove the duplicated outdoor-advice line.
+- [x] Open group-specific PM2.5 health guidance from the advice selector, using the selected place and hour.
+- [x] Verify category rules and popup interactions on desktop and phone.
