@@ -542,7 +542,7 @@ button { cursor: pointer; }
 .app--content .tool__panel--sensors { min-height: 560px; display: flex; flex-direction: column; }
 .app--content .tool__panel--sensors .tool__group { margin-top: auto; }
 @media (max-width: 900px) {
-  .app--content .tool__panel--sensors { min-height: 420px; }
+  .app--content .tool--sensors .tool__map { height: 560px; }
 }
 .app--content .heating-notes { margin-top: 24px; align-items: start; }
 .app--content .heating-notes p { margin: 0; }

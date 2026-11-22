@@ -60,7 +60,7 @@ export default function SensorsPage() {
         <p>Three official stations measure a basin of 300,000 people — enough to know how the city is doing, not how your street is. This tool scores every 250 m of the city and proposes where the next instruments should go.</p>
       </header>
 
-      <div className="tool">
+      <div className="tool tool--sensors">
         <div className="tool__map">
           <div ref={el} className="tool__canvas"/>
           {failed && <NoMap>The weights and the ranked list still work.</NoMap>}
