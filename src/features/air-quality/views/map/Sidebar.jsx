@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Bell, Footprints, Wind, CircleAlert, X, ChevronDown } from 'lucide-react';
-import { air, cap, coordsOf, dayHours, estimateAt, nameOf, readingFor, stationById, timeAt, valueAt } from '../../lib/air';
+import { air, cap, coordsOf, dayHours, estimateAt, idxOf, nameOf, readingFor, stationById, timeAt, valueAt } from '../../lib/air';
+import { availableForecastHours } from '../../lib/forecastTime';
 import { BAND_COLORS, BAND_TEXT, NAMES, PROFILES, PROFILE_KEYS, UNIT } from '../../lib/config';
 import { bandIndex } from '../../lib/aqi';
 import { fmtDay, fmtHour, fmtWhen, hhmm, isNum, km, round } from '../../lib/format';
@@ -114,7 +115,8 @@ export function Sidebar({ elevation }) {
       </section>
 
       {/* ---------- next hours ---------- */}
-      <NextHours selection={selection} p={p}/>
+      <NextHours selection={selection} p={p} idx={idx} onPick={goto}/>
+      <ForecastPicker selection={selection} p={p} idx={idx} onPick={goto}/>
       <NextDays selection={selection} p={p}/>
 
       {/* ---------- details ---------- */}
@@ -135,7 +137,7 @@ function placeSub(sel) {
         return cap(air.places?.rows[sel.id]?.[2] || 'place');
     return `${sel.lat.toFixed(4)}° N, ${sel.lng.toFixed(4)}° E`;
 }
-function NextHours({ selection, p }) {
+function NextHours({ selection, p, idx, onPick }) {
     const version = useStore(s => s.version);
     const [pts, setPts] = useState(undefined);
     const [prov, setProv] = useState(getForecastProvider());
@@ -159,17 +161,43 @@ function NextHours({ selection, p }) {
           <div className="next">
             {pts.map(pt => {
                 const b = pt.v != null ? bandIndex(pt.v, p) : -1;
-                return (<div key={pt.t} className="next__cell" title={pt.v != null ? `${round(pt.v)} ${UNIT}` + (pt.lo != null && pt.hi != null ? `, 80 % likely between ${round(pt.lo)} and ${round(pt.hi)}` : '') : 'no value'}>
+                const i = idxOf(pt.t);
+                return (<Button variant="outline" key={pt.t} className="next__cell" aria-label={`View pollution at ${fmtWhen(pt.t)}`} aria-pressed={idx === i} disabled={pt.v == null || !readingFor(selection, i, p)} onClick={() => onPick(i)} title={pt.v != null ? `${round(pt.v)} ${UNIT}` + (pt.lo != null && pt.hi != null ? `, 80 % likely between ${round(pt.lo)} and ${round(pt.hi)}` : '') : 'no value'}>
                   <span className="xs num">{fmtHour(pt.t)}</span>
                   <span className="next__sw" style={{ background: b >= 0 ? BAND_COLORS[b] : 'var(--surface-3)' }}/>
                   <strong className="num">{pt.v != null ? Math.round(pt.v) : '–'}</strong>
                   {pt.lo != null && pt.hi != null && <span className="next__range num">{Math.round(pt.lo)}–{Math.round(pt.hi)}</span>}
-                </div>);
+                </Button>);
             })}
           </div>
           {pts.some(x => x.lo != null) && <p className="xs">Most likely value, with the range it falls in 8 times out of 10.</p>}
         </>)}
     </section>);
+}
+function ForecastPicker({ selection, p, idx, onPick }) {
+    useStore(s => s.version);
+    const slots = availableForecastHours({ lastMeas: air.lastMeas, n: air.n, timeAt, readingAt: i => readingFor(selection, i, p) });
+    const selected = slots.find(s => s.i === idx) || slots[0];
+    const [draftDate, setDraftDate] = useState(null);
+    const date = draftDate ?? selected?.date ?? '';
+    const daySlots = slots.filter(s => s.date === date);
+    const first = slots[0], last = slots[slots.length - 1];
+    return <section className="sb-section forecast-picker">
+      <div className="sb-row"><h3 className="sb-h">Choose a forecast time</h3><span className="tag tag--fc">Forecast</span></div>
+      {!first || !last ? <p className="xs">No hourly forecast available right now.</p> : <>
+        <div className="forecast-picker__fields">
+          <label><span className="label">Date</span><input className="input" aria-label="Forecast date" type="date" min={first.date} max={last.date} value={date} onChange={e => {
+              setDraftDate(e.target.value);
+              const next = slots.find(s => s.date === e.target.value);
+              if (next) { onPick(next.i); setDraftDate(null); }
+          }}/></label>
+          <label><span className="label">Time</span><select className="input" aria-label="Forecast time" disabled={!daySlots.length} value={daySlots.some(s => s.i === idx) ? idx : daySlots[0]?.i ?? ''} onChange={e => onPick(Number(e.target.value))}>
+            {daySlots.map(s => <option key={s.i} value={s.i}>{s.time}</option>)}
+          </select></label>
+        </div>
+        <p className="xs" role="status">{daySlots.length ? `Ljubljana time · Available ${first.date} to ${last.date}.` : 'No forecast data for this date. Choose a date within the available range.'}</p>
+      </>}
+    </section>;
 }
 function NextDays({ selection, p }) {
     const [, force] = useState(0);

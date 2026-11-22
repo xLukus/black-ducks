@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Flame, Factory } from 'lucide-react';
 import { loadData } from '../lib/data';
-import { eur } from '../lib/format';
 import { circle } from '../lib/geo';
 import { createHeating, EVENING_HOURS, SEASON_DAYS } from '../lib/heating';
 import { useBaseMap } from '../map/useBaseMap';
@@ -116,11 +115,11 @@ export default function HeatingPage() {
       <section className="section">
         <h2>What it buys</h2>
         {!res ? <span className="spinner"/> : (<>
-            <div className="stats">
-              <div><strong className="num">−{res.drop.toFixed(res.drop < 1 ? 2 : 1)}</strong><span>µg/m³ less PM10 from heating on a winter evening, from {res.site.eve.toFixed(1)} today</span></div>
-              <div><strong className="num">{res.hoursSaved ?? '–'}</strong><span>{res.hoursSaved != null ? `hours a year brought below 25 µg/m³, out of ${res.site.h25}` : 'no hourly curve for this site'}</span></div>
-              <div><strong className="num">{res.targets.toLocaleString('en-GB')}</strong><span>{action === 'stoves' ? 'buildings to convert' : 'buildings to connect'}</span></div>
-              <div><strong className="num">{eur(res.cost)}</strong><span>{`estimated at ${res.unitCost.toLocaleString('en-GB')} € per building, before subsidies`}</span></div>
+            <div className="stats heating-stats" aria-live="polite">
+              <div><span className="heating-stat-label">Less evening smoke</span><strong className="num">−{res.drop.toFixed(res.drop < 1 ? 2 : 1)} <small>µg/m³</small></strong><span><b>{(res.f * 100).toFixed(1)}% reduction</b> in heating PM10</span><span>{res.site.eve.toFixed(1)} → {(res.site.eve - res.drop).toFixed(1)} µg/m³ after the change</span></div>
+              <div><span className="heating-stat-label">Cleaner hours</span><strong className="num">{res.hoursSaved?.toLocaleString('en-GB') ?? '–'} <small>hours</small></strong><span>{res.hoursSaved != null ? `per year brought below 25 µg/m³` : 'no hourly curve for this site'}</span><span>{res.hoursSaved != null ? `Out of ${res.site.h25.toLocaleString('en-GB')} hours above the threshold` : 'An hourly estimate is unavailable'}</span></div>
+              <div><span className="heating-stat-label">Buildings improved</span><strong className="num">{res.targets.toLocaleString('en-GB')}</strong><span>{action === 'stoves' ? 'old-stove buildings to convert' : 'buildings to connect'}</span><span>{share}% participation within {radius.toLocaleString('en-GB')} m</span></div>
+              <div><span className="heating-stat-label">Estimated investment</span><strong className="num">€{res.cost.toLocaleString('en-GB')}</strong><span>€{res.unitCost.toLocaleString('en-GB')} × {res.targets.toLocaleString('en-GB')} buildings</span><span>Before subsidies · indicative estimate</span></div>
             </div>
             <div className="planning-notes heating-notes">
             <p className="small">
