@@ -7,17 +7,20 @@ import { assess } from '../lib/alerts';
 import { ALERT_LEVELS, ALERT_REPEAT_MS, PROFILES, PROFILE_KEYS, SOURCES } from '../lib/config';
 import { fmtWhen } from '../lib/format';
 import { Segmented } from './ui';
+import watchLogo from '@/assets/breathe-watch-logo.png.asset.json';
 const NAV = [
     { to: '/', label: 'Map', end: true },
     { to: '/basin', label: 'Why winter is worse' },
     { to: '/sensors', label: 'Sensor plan' },
     { to: '/heating', label: 'Heating plan' }
 ];
-export function TopBar() {
+export function TopBar({ contentBrand = false }) {
     return (<header className="topbar">
       <Link to="/" className="brand" aria-label="Breathe Ljubljana, home">
-        <span className="brand__mark" aria-hidden="true"/>
-        <span>Breathe Ljubljana</span>
+        {contentBrand ? <img className="content-brand-logo" src={watchLogo.url} alt="Breathe" width="1189" height="355" /> : <>
+          <span className="brand__mark" aria-hidden="true"/>
+          <span>Breathe Ljubljana</span>
+        </>}
       </Link>
       <nav className="nav" aria-label="Main">
         {NAV.map(n => (<Link key={n.to} to={n.to} activeOptions={{ exact: n.to === '/' }} className="nav__link" activeProps={{ className: 'is-active' }}>

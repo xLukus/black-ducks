@@ -6,5 +6,6 @@
 
 # Non-map styling
 
-- [ ] Apply the requested Black Duck styling and new logo to the basin, sensor, and heating pages without changing their layouts or any maps. Waiting for the style reference and logo.
-- [ ] Verify the three restyled pages and confirm the main map remains unchanged.
+- [x] Apply Black Duck Watch’s existing logo and teal, sky-blue, and mint accents to the three non-map pages while preserving their layouts and all maps.
+- [x] Remove the basin history section and put the monthly and hourly charts in separate full-width rows.
+- [x] Verify the three restyled pages and confirm the main map remains unchanged.
