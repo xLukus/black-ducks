@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Bell, Footprints, Wind, CircleAlert, X, ChevronDown } from 'lucide-react';
 import { air, cap, coordsOf, dayHours, estimateAt, nameOf, readingFor, stationById, timeAt, valueAt } from '../../lib/air';
-import { BAND_COLORS, BAND_TEXT, GROUP_TEXT, NAMES, PROFILES, PROFILE_KEYS, UNIT } from '../../lib/config';
+import { BAND_COLORS, BAND_TEXT, NAMES, PROFILES, PROFILE_KEYS, UNIT } from '../../lib/config';
 import { bandIndex } from '../../lib/aqi';
 import { fmtDay, fmtHour, fmtWhen, hhmm, isNum, km, round } from '../../lib/format';
 import { plan as makePlan, verdict } from '../../lib/planner';
@@ -134,16 +134,6 @@ function placeSub(sel) {
     if (sel.kind === 'place')
         return cap(air.places?.rows[sel.id]?.[2] || 'place');
     return `${sel.lat.toFixed(4)}° N, ${sel.lng.toFixed(4)}° E`;
-}
-function WhyItMatters({ profile }) {
-    const [open, setOpen] = useState(false);
-    return (<div className={'why' + (open ? ' is-open' : '')}>
-      <button className="why__head" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        Why it matters for {PROFILES[profile].long.toLowerCase()}
-        <ChevronDown />
-      </button>
-      {open && GROUP_TEXT[profile].map((t, k) => <p key={k} className="small">{t}</p>)}
-    </div>);
 }
 function NextHours({ selection, p }) {
     const version = useStore(s => s.version);

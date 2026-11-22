@@ -18,6 +18,6 @@
 
 # Map health guidance
 
-- [ ] Use the new logo on the map and remove the duplicated outdoor-advice line.
-- [ ] Open group-specific PM2.5 health guidance from the advice selector, using the selected place and hour.
-- [ ] Verify category rules and popup interactions on desktop and phone.
+- [x] Use the new logo on the map and remove the duplicated outdoor-advice line.
+- [x] Open group-specific PM2.5 health guidance from the advice selector, using the selected place and hour.
+- [x] Verify category rules and popup interactions on desktop and phone.
