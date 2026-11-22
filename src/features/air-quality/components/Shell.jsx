@@ -4,7 +4,7 @@ import { Bell, X } from 'lucide-react';
 import { useStore } from '../state/store';
 import { air, timeAt } from '../lib/air';
 import { assess } from '../lib/alerts';
-import { ALERT_LEVELS, ALERT_REPEAT_MS, PROFILES, PROFILE_KEYS, SOURCES } from '../lib/config';
+import { ALERT_LEVELS, ALERT_REPEAT_MS, PROFILES, PROFILE_KEYS } from '../lib/config';
 import { fmtWhen } from '../lib/format';
 import { Segmented } from './ui';
 import watchLogo from '@/assets/breathe-watch-logo.png.asset.json';
@@ -158,8 +158,7 @@ export function AlertBanner() {
 export function Footer() {
     return (<footer className="footer">
       <div className="footer__in">
-        <p><strong>Breathe Ljubljana</strong> · ADA Hack 2026. General guidance, not medical advice. Health messages follow the EEA European Air Quality Index.</p>
-        <p className="xs">Data: {SOURCES} Vir: ARSO.</p>
+        <p><strong>Breathe Ljubljana</strong> · ADA Hack 2026.</p>
       </div>
     </footer>);
 }

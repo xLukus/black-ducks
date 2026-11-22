@@ -9,6 +9,7 @@ export const KERNEL_M = 150;
 export const REACH_M = 1500;
 export const EVENING_HOURS = 5; // 17:00-22:00
 export const SEASON_DAYS = 90;
+export const STOVE_COST_EUR = 1000;
 /** rough headcounts so the exposure figure has a number to stand on — an assumption, editable in the UI */
 export const PEOPLE = { kindergarten: 90, school: 400, 'elderly home': 120, hospital: 300, 'health centre': 150 };
 export function createHeating(data) {
@@ -80,11 +81,11 @@ export function createHeating(data) {
             }
             hoursSaved = Math.round(site.h25 * (1 - ratio));
         }
-        const unit = action === 'stoves' ? M.cost_stove_eur : action === 'heat' ? M.cost_district_heating_eur : 0;
+        const unit = action === 'stoves' ? STOVE_COST_EUR : action === 'heat' ? M.cost_district_heating_eur : 0;
         const people = o.people != null ? o.people : PEOPLE[site.cat] || 100;
         return {
             site, f, drop, hoursSaved, targets: Math.round(targets), flats, cellsIn: inside,
-            cost: Math.round(targets) * unit, people,
+            cost: Math.round(targets) * unit, unitCost: unit, people,
             personHours: drop * EVENING_HOURS * SEASON_DAYS * people, hood
         };
     }

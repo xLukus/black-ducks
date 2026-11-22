@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Flame, Ban, Factory } from 'lucide-react';
+import { Flame, Factory } from 'lucide-react';
 import { loadData } from '../lib/data';
 import { eur } from '../lib/format';
 import { circle } from '../lib/geo';
@@ -9,10 +9,9 @@ import { addDots, points } from '../map/gridLayers';
 import { NoMap, Slider } from '../components/ui';
 const ACTIONS = [
     { key: 'stoves', title: 'Replace old stoves', desc: 'New appliances in pre-1980 homes off the heat network.', icon: Flame },
-    { key: 'heat', title: 'Connect to district heating', desc: 'Hook up buildings within 50 m of the network.', icon: Factory },
-    { key: 'ban', title: 'Burn ban on smog days', desc: 'No wood or coal burning while an episode lasts.', icon: Ban }
+    { key: 'heat', title: 'Connect to district heating', desc: 'Hook up buildings within 50 m of the network.', icon: Factory }
 ];
-const SHARE_LABEL = { stoves: 'Stoves replaced', heat: 'Buildings connected', ban: 'Households that comply' };
+const SHARE_LABEL = { stoves: 'Stoves replaced', heat: 'Buildings connected' };
 const label = (s) => (s.name || 'Unnamed ' + s.cat) + ' · ' + s.cat;
 export default function HeatingPage() {
     const [H, setH] = useState(null);
@@ -103,7 +102,7 @@ export default function HeatingPage() {
           <div className="chips">
             {['kindergarten', 'school', 'elderly home'].map(c => (<button key={c} className="btn btn--sm" onClick={() => { const s = H?.sites.find(x => x.cat === c); if (s)
             pick(s); }}>
-                Smokiest {c === 'elderly home' ? 'care home' : c}
+                Suggested {c === 'elderly home' ? 'care home' : c}
               </button>))}
           </div>
           <div className="tool__group heating-sliders">
@@ -120,8 +119,8 @@ export default function HeatingPage() {
             <div className="stats">
               <div><strong className="num">−{res.drop.toFixed(res.drop < 1 ? 2 : 1)}</strong><span>µg/m³ less PM10 from heating on a winter evening, from {res.site.eve.toFixed(1)} today</span></div>
               <div><strong className="num">{res.hoursSaved ?? '–'}</strong><span>{res.hoursSaved != null ? `hours a year brought below 25 µg/m³, out of ${res.site.h25}` : 'no hourly curve for this site'}</span></div>
-              <div><strong className="num">{action === 'ban' ? '–' : res.targets.toLocaleString('en-GB')}</strong><span>{action === 'stoves' ? 'buildings to convert' : action === 'heat' ? 'buildings to connect' : 'a ban needs no building work'}</span></div>
-              <div><strong className="num">{action === 'ban' ? '0 €' : eur(res.cost)}</strong><span>{action === 'ban' ? 'enforcement, not investment' : `at ${action === 'stoves' ? '6,000' : '8,000'} € per building, before subsidies`}</span></div>
+              <div><strong className="num">{res.targets.toLocaleString('en-GB')}</strong><span>{action === 'stoves' ? 'buildings to convert' : 'buildings to connect'}</span></div>
+              <div><strong className="num">{eur(res.cost)}</strong><span>{`estimated at ${res.unitCost.toLocaleString('en-GB')} € per building, before subsidies`}</span></div>
             </div>
             <div className="planning-notes heating-notes">
             <p className="small">

@@ -21,3 +21,9 @@
 - [x] Use the new logo on the map and remove the duplicated outdoor-advice line.
 - [x] Open group-specific PM2.5 health guidance from the advice selector, using the selected place and hour.
 - [x] Verify category rules and popup interactions on desktop and phone.
+
+# Footer and heating simplification
+
+- [x] Remove the footer guidance and data paragraphs.
+- [x] Remove the burn-ban option and rename site suggestions.
+- [x] Apply the selected €1,000 stove replacement rate to totals and verify calculations.

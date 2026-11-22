@@ -52,6 +52,12 @@ describe('models', () => {
     const S = createSiting(data);
     const site = H.sites[0];
     const f = (radius, action, share) => H.run({ site, radius, action, share }).f;
+    it('estimates stove replacements at €1,000 per building', () => {
+        const result = H.run({ site, radius: 1000, action: 'stoves', share: 1 });
+        expect(result.targets).toBeGreaterThan(0);
+        expect(result.unitCost).toBe(1000);
+        expect(result.cost).toBe(result.targets * 1000);
+    });
     it('halving the share halves the effect', () => expect(Math.abs(f(300, 'stoves', 1) / 2 - f(300, 'stoves', 0.5))).toBeLessThan(1e-9));
     it('a bigger radius never removes less', () => {
         const r = [250, 400, 700, 1000].map(x => f(x, 'stoves', 1));
