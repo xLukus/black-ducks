@@ -499,7 +499,7 @@ button { cursor: pointer; }
 .pick__why span { flex-basis: 0; }
 @media (max-width: 640px) { .pick__stats { grid-template-columns: repeat(2, 1fr); } }
 
-.actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
 .action { display: flex; gap: 12px; align-items: flex-start; text-align: left; padding: 14px 16px; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--surface); }
 .action:hover { border-color: var(--ink-3); }
 .action.is-active { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
