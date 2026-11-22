@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BasinRouteImport } from './routes/basin'
+import { Route as HeatingRouteImport } from './routes/heating'
+import { Route as SensorsRouteImport } from './routes/sensors'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BasinRoute = BasinRouteImport.update({
+  id: '/basin',
+  path: '/basin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HeatingRoute = HeatingRouteImport.update({
+  id: '/heating',
+  path: '/heating',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SensorsRoute = SensorsRouteImport.update({
+  id: '/sensors',
+  path: '/sensors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/basin': typeof BasinRoute
+  '/heating': typeof HeatingRoute
+  '/sensors': typeof SensorsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/basin': typeof BasinRoute
+  '/heating': typeof HeatingRoute
+  '/sensors': typeof SensorsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/basin': typeof BasinRoute
+  '/heating': typeof HeatingRoute
+  '/sensors': typeof SensorsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/basin' | '/heating' | '/sensors'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/basin' | '/heating' | '/sensors'
+  id: '__root__' | '/' | '/basin' | '/heating' | '/sensors'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BasinRoute: typeof BasinRoute
+  HeatingRoute: typeof HeatingRoute
+  SensorsRoute: typeof SensorsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/basin': {
+      id: '/basin'
+      path: '/basin'
+      fullPath: '/basin'
+      preLoaderRoute: typeof BasinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/heating': {
+      id: '/heating'
+      path: '/heating'
+      fullPath: '/heating'
+      preLoaderRoute: typeof HeatingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sensors': {
+      id: '/sensors'
+      path: '/sensors'
+      fullPath: '/sensors'
+      preLoaderRoute: typeof SensorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BasinRoute: BasinRoute,
+  HeatingRoute: HeatingRoute,
+  SensorsRoute: SensorsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
