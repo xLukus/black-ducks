@@ -538,6 +538,12 @@ button { cursor: pointer; }
 .app--content .planning-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; text-align: left; }
 .app--content .planning-notes h3 { font-size: var(--t-base); margin-bottom: 6px; }
 .app--content .planning-notes--centered { max-width: 800px; margin-inline: auto; }
+.app--content .planning-notes--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.app--content .tool__panel--sensors { min-height: 560px; display: flex; flex-direction: column; }
+.app--content .tool__panel--sensors .tool__group { margin-top: auto; }
+@media (max-width: 900px) {
+  .app--content .tool--sensors .tool__map { height: 560px; }
+}
 .app--content .heating-notes { margin-top: 24px; align-items: start; }
 .app--content .heating-notes p { margin: 0; }
 .app--content .heating-formula { font-family: math, 'Cambria Math', 'STIX Two Math', serif; font-size: 16px; }
