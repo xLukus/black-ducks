@@ -12,6 +12,6 @@
 
 # Planning-page adjustments
 
-- [ ] Show only the first five proposed sites and center the two remaining left-aligned sensor explanations.
-- [ ] Put heating explanations in two columns with a typeset formula; remove the people field and lower the sliders without shortening the panel.
-- [ ] Remove Measured/Model badges only from the map Layers panel, and verify the changed pages.
+- [x] Show only the first five proposed sites and center the two remaining left-aligned sensor explanations.
+- [x] Put heating explanations in two columns with a typeset formula; remove the people field and lower the sliders without shortening the panel.
+- [x] Remove Measured/Model badges only from the map Layers panel, and verify the changed pages.
