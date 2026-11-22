@@ -2,6 +2,7 @@
    default, or whatever was clicked or searched on the map. */
 import { useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { Button } from '@/components/ui/button';
 import { Bell, Footprints, Wind, CircleAlert, X, ChevronDown } from 'lucide-react';
 import { air, cap, coordsOf, dayHours, estimateAt, nameOf, readingFor, stationById, timeAt, valueAt } from '../../lib/air';
 import { BAND_COLORS, BAND_TEXT, GROUP_TEXT, NAMES, PROFILES, PROFILE_KEYS, UNIT } from '../../lib/config';
@@ -71,7 +72,7 @@ export function Sidebar({ elevation }) {
       <section className="sb-section">
         <div className="sb-row">
           <h3 className="sb-h">{fmtDay(timeAt(idx))}, hour by hour</h3>
-          {plan.forecast > 0 && <span className="tag tag--fc">incl. forecast</span>}
+          {plan.forecast > 0 && <span className="tag tag--fc">Forecast</span>}
         </div>
         <HourBars hours={hours} p={p} plan={plan} nowIdx={idx} onPick={goto}/>
         <ul className="answers">
@@ -114,7 +115,7 @@ export function Sidebar({ elevation }) {
       <Details selection={selection} idx={idx} p={p} elevation={elevation}/>
 
       <section className="sb-section sb-foot">
-        <button className="btn btn--sm" onClick={() => window.dispatchEvent(new Event('bl:open-alerts'))}><Bell /> Get alerts</button>
+        <Button variant="outline" size="sm" className="btn btn--sm w-full" onClick={() => window.dispatchEvent(new Event('bl:open-alerts'))}><Bell /> Get alerts</Button>
         <p className="xs">General guidance, not medical advice. Bands follow the EEA European Air Quality Index. Data: ARSO and partners — <Link to="/basin">why winter is worse</Link>.</p>
       </section>
     </aside>);
@@ -170,10 +171,7 @@ function NextHours({ selection, p }) {
                 </div>);
             })}
           </div>
-          <p className="xs">
-            {pts.some(x => x.lo != null) ? 'Most likely value, with the range it falls in 8 times out of 10. ' : ''}
-            {prov.name}{model.status === 'ok' ? ` · issued ${fmtHour(model.issued)}` : ''}.
-          </p>
+          {pts.some(x => x.lo != null) && <p className="xs">Most likely value, with the range it falls in 8 times out of 10.</p>}
         </>)}
     </section>);
 }
@@ -209,15 +207,18 @@ function NextDays({ selection, p }) {
             </tr>))}
         </tbody>
       </table>
-      <p className="xs">Most likely daily mean in {UNIT}, and the chance it goes over the daily limit of {DAILY_LIMIT[p]} {UNIT}{p === 'pm25' ? ' (EU 2030)' : ''}. Local days, ARSO stations.</p>
+      <p className="xs">Most likely daily mean in {UNIT}, and the chance it goes over the daily limit of {DAILY_LIMIT[p]} {UNIT}{p === 'pm25' ? ' (EU 2030)' : ''}.</p>
     </section>);
 }
 function Details({ selection, idx, p, elevation }) {
+    const [open, setOpen] = useState(false);
     if (!selection) {
         const arso = air.stations.filter(s => s.kind === 'arso');
         return (<section className="sb-section">
-        <h3 className="sb-h">About this number</h3>
-        <p className="small">The city value is the mean of ARSO’s reference stations: {arso.map(s => s.short.replace('ARSO ', '')).join(', ')}. Click anywhere on the map — a street, a building, a school — to see the air there.</p>
+        <Button variant="ghost" className="why__head sb-details-toggle" aria-expanded={open} aria-controls="city-number-details" onClick={() => setOpen(o => !o)}>
+          About this number <ChevronDown className={open ? 'rotate-180' : ''}/>
+        </Button>
+        {open && <p id="city-number-details" className="small">The city value is the mean of ARSO’s reference stations: {arso.map(s => s.short.replace('ARSO ', '')).join(', ')}. Click anywhere on the map — a street, a building, a school — to see the air there.</p>}
       </section>);
     }
     if (selection.kind === 'station') {
